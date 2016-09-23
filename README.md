@@ -9,7 +9,7 @@ INSTALLATION & SETTINGS GUIDE
 
 How TO USE
   - Open your browser and type "http://[web server's ip address]/mysql_CDB.php" to create Database "I2NSF_DB".
-  - Open another browser and type "http://[web server's ip address]/mysql_CDB.php" to create the table "Policies".
+  - Open another browser and type "http://[web server's ip address]/mysql_CT.php" to create the table "Policies".
   - close all tabs and start a new browser and type http://[web server's ip address]/index.php to access the Web UI.
   - Type in the provided username and password
   - Select either Policy settings or Logs
