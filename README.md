@@ -14,4 +14,5 @@ How TO USE
   - Select either Policy settings or Logs
   - In Policy settings page, fill in all required information then press submit
   - If you wish to view the Policies tables' information type in the following command:
+     
     curl -i -X GET http://[web server's ip address]/qfc.php/api/Policies
