@@ -1,5 +1,4 @@
 <?php
-
 function array_to_xml( $data, &$xml_data ) {
     foreach( $data as $key => $value ) {
         if( is_array($value) ) {
@@ -33,7 +32,7 @@ $url = $_SERVER["REQUEST_URI"];
 
 if($url == "/qfc.php/api/Policies"){
 		// Retrieves all robots
-		$sql = "SELECT * FROM Policies ORDER BY Policy_name";
+		$sql = "SELECT * FROM Policies ORDER BY id";
 		$sql_result = $conn->query($sql);
 
 		$data = array();
@@ -42,6 +41,8 @@ if($url == "/qfc.php/api/Policies"){
 			$data[] = array(
 			    'id' => $row["id"],
 			    'Policy_name' => $row["Policy_name"],
+			    'Client_IP' => $row["Client_IP"],
+			    'Dest_IP' => $row["Dest_IP"],
 			    'Caller_location' => $row["Caller_location"],
 			    'Callee_location' => $row["Callee_location"],
 			    'Start_time' => $row["Start_time"],
@@ -75,6 +76,8 @@ $params = explode("/",$url);
 			$data[] = array(
 			    'id' => $row["id"], 
 			    'Policy_name' => $row["Policy_name"],
+			    'Client_IP' => $row["Client_IP"],
+			    'Dest_IP' => $row["Dest_IP"],
 			    'Caller_location' => $row["Caller_location"],
 			    'Callee_location' => $row["Callee_location"],
 			    'Start_time' => $row["Start_time"],
@@ -88,7 +91,7 @@ $params = explode("/",$url);
 		
 		// Updates a robot
 		$info = json_decode($put_body);
-		$sql = "UPDATE Policies SET Policy_name = '$info->Policy_name', Caller_location = '$info->Caller_location', Callee_location = '$info->Callee_location', Start_time = '$info->Start_time', End_time = '$info->End_time', Action = '$info->Action', WHERE id = $params[4]";
+		$sql = "UPDATE Policies SET Policy_name = '$info->Policy_name', Client_IP = '$info->Client_IP', Dest_IP = '$info->Dest_IP', Caller_location = '$info->Caller_location', Callee_location = '$info->Callee_location', Start_time = '$info->Start_time', End_time = '$info->End_time', Action = '$info->Action', WHERE id = $params[4]";
 		if ($conn->query($sql) === TRUE) {
 		   echo "Updated successfully";
 		} else {
@@ -114,6 +117,8 @@ $params = explode("/",$url);
 			$data[] = array(
 			    'id' => $row["id"], 
 			    'Policy_name' => $row["Policy_name"],
+			    'Client_IP' => $row["Client_IP"],
+			    'Dest_IP' => $row["Dest_IP"],
 			    'Caller_location' => $row["Caller_location"],
 			    'Callee_location' => $row["Callee_location"],
 			    'Start_time' => $row["Start_time"],

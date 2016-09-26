@@ -55,7 +55,6 @@ div {
 
 <?php 
 
-
 $idErr = $snationErr = $rnationErr = $stimeErr = $etimeErr = $actErr = "";
 $id = $nation = $act = $snation = $rnation = $stime = $etime =  "";
 $errors = 0;
@@ -63,7 +62,7 @@ $errors = 0;
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  if (empty($_POST["Policy_name"])||empty($_POST["Src_Country"])||empty($_POST["Dest_Country"])||empty($_POST["Starting_Time"])||empty($_POST["Starting_Time"])||empty($_POST["Ending_Time"])||empty($_POST["Action"])) {
+  if (empty($_POST["Policy_name"])||empty($_POST["Dest_IP"])||empty($_POST["Src_Country"])||empty($_POST["Dest_Country"])||empty($_POST["Starting_Time"])||empty($_POST["Starting_Time"])||empty($_POST["Ending_Time"])||empty($_POST["Action"])) {
     echo nl2br('<span style="color:#FF0000;text-align:center;">Please fill in all required fields.</span><br><br>');
 
     $errors++;
@@ -97,13 +96,14 @@ if (strlen($_POST["Policy_name"]) < 3) {
     if(count($error) > 0) {
 
     return false;
+    exit();
 }else{
 
 
 
 $date = date_create("NOW");
 $file = 'policy.txt';
-$test = date_format($date,"Y/m/d H:i:s") . '-' . $_POST["Policy_name"] . '-' . $_POST["Src_Country"] . '-' . $_POST["Dest_Country"] . '-' . $_POST["Starting_Time"] . '-' . $_POST["Ending_Time"] . '-' . $_POST["Action"] . "\n";
+$test = date_format($date,"Y/m/d H:i:s") . '-' . $_POST["Policy_name"] . '-' . $_POST["Client_IP"] . '-' . $_POST["Dest_IP"] . '-' . $_POST["Src_Country"] . '-' . $_POST["Dest_Country"] . '-' . $_POST["Starting_Time"] . '-' . $_POST["Ending_Time"] . '-' . $_POST["Action"] . "\n";
 $ret = file_put_contents($file, $test, FILE_APPEND | LOCK_EX);
 
 
@@ -136,11 +136,19 @@ function test_input($data) {
 <form method="post" id = "form" action="sample.php"> 
 
   <span class="error">* <?php echo $idErr;?></span>
-  Policy Name: <br><br>
+  Policy Name: 
   <input type="text" name = "Policy_name" id = "Policy name">
   <br><br>
+  <span class="error">* <?php echo $idErr;?></span>
+  Client IP address: 
+  <input type="text" name = "Client_IP" value= "<?php echo $_SERVER['REMOTE_ADDR']; ?>" id = "Client_IP">
+  <br><br>
+  <span class="error">* <?php echo $idErr;?></span>
+  Destination IP address: 
+  <input type="text" name = "Dest_IP" id = "Dest_IP">
+  <br><br>
   <span class="error">* <?php echo $snationErr; ?></span>
-  Caller's Location:<br><br>
+  Caller's Location:
   <select name="Src_Country" id = "Src Country">
   <option value="">Select...</option>
   <option value="US">United States</option>
@@ -159,7 +167,7 @@ function test_input($data) {
   </select>
   <br><br>
   <span class="error">* <?php echo $rnationErr; ?></span>
-  Callee's Location:<br><br>
+  Callee's Location:
   <select name="Dest_Country" id = "Dest Country">
   <option value="">Select...</option>
   <option value="US">United States</option>
@@ -178,7 +186,7 @@ function test_input($data) {
   </select>
   <br><br>
   <span class="error">* <?php echo $stimeErr; ?></span>
-  Starting Time :<br><br>
+  Starting Time :
   <select name = "Starting_Time" id="Starting Time">
   <option value="">Select...</option>
   <option value="01:00">01:00</option>
@@ -208,7 +216,7 @@ function test_input($data) {
   </select>
   <br><br>
   <span class="error">* <?php echo $etimeErr;?></span>
-  Ending Time :<br><br>
+  Ending Time :
   <select name = "Ending_Time" id="Ending Time">
   <option value="">Select...</option>
   <option value="01:00">01:00</option>
@@ -238,7 +246,7 @@ function test_input($data) {
   </select>
   <br><br>
   <span class="error">* <?php echo $actErr;?></span>
-  Action:<br><br>
+  Action:
   <select name="Action" id = "Action">
   <option value="">Select...</option>
   <option value="Block">Block</option>
