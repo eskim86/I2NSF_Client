@@ -72,23 +72,32 @@ $dom->formatOutput = true;
 $formattedXML = $dom->saveXML();
 }
 
-$fp = fopen("Dark_Knight.xml","wb");
+/*$fp = fopen("Dark_Knight.xml","wb");
 fwrite($fp, $formattedXML);
 fclose($fp); 
+*/
 
 $date = date_create("NOW");
 $file = 'policy.txt';
 $test = date_format($date,"Y/m/d H:i:s") . '-' . $_POST["Policy_name"] . '-' . $_POST["Client_IP"] . '-' . $_POST["Dest_IP"] . '-' . $_POST["Src_Country"] . '-' . $_POST["Dest_Country"] . '-' . $_POST["Starting_Time"] . '-' . $_POST["Ending_Time"] . '-' . $_POST['Action'] . "\n";
 $ret = file_put_contents($file, $test, FILE_APPEND | LOCK_EX);
 echo nl2br('<span style="color:#FF0000;text-align:center;">Success!!<br><br>You will be redirected to Page1 in few seconds!</span>');
+
 header( "refresh:3;url=policyname.php" );
 
 
 /*echo json_encode($data);*/
 
 
-
 mysqli_close($conn);
+
+$host = "127.0.0.1";
+$TCP_PORT = 6000;
+$output="Go, My Dark Knight!" ;
+$socket = socket_create(AF_INET, SOCK_STREAM,0) or die("Could not create socket\n");
+socket_connect ($socket , $host,$TCP_PORT ) ;
+socket_write($socket, $output, strlen ($output)) or die("Could not write output\n");
+socket_close($socket) ;
 
 header("refresh:0;url=qfc.php/api/Policies");
 
